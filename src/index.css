@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,700;1,700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "JetBrains Mono", monospace;
+}
+
+body {
+  @apply bg-gradient-to-r from-[#14131b] to-[#0b0a0f];
+}
+
+@layer components {
+  .range {
+    width: 100%;
+    background: hsl(248deg 15% 11%);
+    cursor: pointer;
+    height: 8px;
+    background-image: linear-gradient(
+      hsl(127deg 100% 82%),
+      hsl(127deg 100% 82%)
+    );
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    appearance: none;
+  }
+
+  .range::-webkit-slider-thumb {
+    height: 28px;
+    width: 28px;
+    background: white;
+    transition: background-color 0.15s linear, border 0.15s linear;
+    -webkit-appearance: none;
+    border-radius: 14px;
+  }
+
+  .range:hover::-webkit-slider-thumb {
+    background: hsl(248deg 15% 11%);
+    border: 2px solid hsl(127deg 100% 82%);
+    -webkit-appearance: none;
+  }
+
+  .checkbox {
+    box-sizing: border-box;
+    appearance: none;
+    background-color: hsl(248deg 15% 11%);
+    position: relative;
+    cursor: pointer;
+    border: 2px solid hsl(252deg 11% 91%);
+  }
+
+  .checkbox:hover {
+    border: 2px solid hsl(127deg 100% 82%);
+  }
+
+  .checkbox:checked {
+    background: url("./assets/icon-check.svg");
+    background-color: hsl(127deg 100% 82%);
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+  }
+}
