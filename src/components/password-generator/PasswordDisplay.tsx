@@ -1,10 +1,22 @@
+import { useSnackbar } from "notistack";
+
 interface Props {
   password: string;
 }
 
 export const PasswordDisplay: React.FC<Props> = ({ password }) => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const handleClick = async () => {
     await navigator.clipboard.writeText(password);
+    enqueueSnackbar("COPIED", {
+      variant: "success",
+      anchorOrigin: {
+        horizontal: "center",
+        vertical: "top",
+      },
+      autoHideDuration: 3000,
+    });
   };
 
   return (
