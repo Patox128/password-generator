@@ -17,6 +17,8 @@ function App() {
     useSymbols: false,
   });
 
+  console.log(settings.length);
+
   const score = calculatePasswordStrength(password);
 
   const settingsArray = [
