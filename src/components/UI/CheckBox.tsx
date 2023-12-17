@@ -1,11 +1,9 @@
-import { FormState } from "../../types";
-
 interface Props {
   label: string;
   id: string;
   name: string;
   value: boolean;
-  setValues: React.Dispatch<React.SetStateAction<FormState>>;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const CheckBox: React.FC<Props> = ({
@@ -13,15 +11,8 @@ export const CheckBox: React.FC<Props> = ({
   value,
   name,
   id,
-  setValues,
+  onChange,
 }) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValues((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.checked,
-    }));
-  };
-
   return (
     <div className="flex gap-5">
       <input
@@ -30,7 +21,7 @@ export const CheckBox: React.FC<Props> = ({
         type="checkbox"
         className="checkbox peer h-5 w-5 checked:bg-center"
         checked={value}
-        onChange={(e) => handleChange(e)}
+        onChange={(e) => onChange(e)}
       />
       <label htmlFor={id} className="w-full cursor-pointer ">
         {label}

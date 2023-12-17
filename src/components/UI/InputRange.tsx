@@ -1,21 +1,16 @@
-import { FormState } from "../../types";
-
 interface Props {
   value: number;
   name: string;
-  setValues: React.Dispatch<React.SetStateAction<FormState>>;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const InputRange: React.FC<Props> = ({ value, setValues, name }) => {
+export const InputRange: React.FC<Props> = ({ value, onChange, name }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.target.style.backgroundSize =
       ((parseInt(e.target.value) - parseInt(e.target.min)) * 100) /
         (parseInt(e.target.max) - parseInt(e.target.min)) +
       "% 100%";
-    setValues((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+    onChange(e);
   };
 
   return (

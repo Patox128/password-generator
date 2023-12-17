@@ -1,60 +1,17 @@
-import { useState } from "react";
 import { InputRange } from "./components/UI/InputRange";
-import { FormState } from "./types";
 import { CheckBox } from "./components/UI/CheckBox";
-import { getRandomChart, getSpecialChar } from "./utils/random-generator";
 import { PasswordDisplay } from "./components/password-generator/PasswordDisplay";
-import { calculatePasswordStrength } from "./utils/password-strength";
 import { PasswordStrength } from "./components/password-generator/PasswordStrength";
+import { usePassword } from "./hooks/usePassword";
+import { useGeneratePassword } from "./hooks/useGeneratePassword";
 
 function App() {
-  const [password, setPassword] = useState("");
-  const [settings, setSettings] = useState<FormState>({
-    length: 0,
-    useUpperCase: true,
-    useLowerCase: true,
-    useNumbers: false,
-    useSymbols: false,
+  const { password, setPassword, settings, handleChange } = usePassword();
+  const { score, handleOnClick } = useGeneratePassword({
+    password,
+    settings,
+    setPassword,
   });
-
-  console.log(settings.length);
-
-  const score = calculatePasswordStrength(password);
-
-  const settingsArray = [
-    {
-      value: settings.useUpperCase,
-      getCharacter: () => getRandomChart(65, 90),
-    },
-    {
-      value: settings.useLowerCase,
-      getCharacter: () => getRandomChart(97, 122),
-    },
-    {
-      value: settings.useNumbers,
-      getCharacter: () => getRandomChart(48, 57),
-    },
-    {
-      value: settings.useSymbols,
-      getCharacter: () => getSpecialChar(),
-    },
-  ];
-
-  const handleOnClick = () => {
-    let passwordGenerate = "";
-
-    const selectSettings = settingsArray.filter((item) => item.value);
-
-    for (let i = 0; i < settings.length; i++) {
-      const index = Math.floor(Math.random() * selectSettings.length);
-      const letter = selectSettings[index]?.getCharacter();
-
-      if (letter) {
-        passwordGenerate += letter;
-      }
-    }
-    setPassword(passwordGenerate);
-  };
 
   return (
     <main className="flex h-screen flex-col items-center justify-center">
@@ -67,35 +24,35 @@ function App() {
           <InputRange
             value={settings.length}
             name="length"
-            setValues={setSettings}
+            onChange={handleChange}
           />
           <div className="flex flex-col gap-5 text-white ">
             <CheckBox
               id="useUpperCase"
               label="Include Upercase Letters"
               name="useUpperCase"
-              setValues={setSettings}
+              onChange={handleChange}
               value={settings.useUpperCase}
             />
             <CheckBox
               id="useLowerCase"
               label="Include Lowercase Letters"
               name="useLowerCase"
-              setValues={setSettings}
+              onChange={handleChange}
               value={settings.useLowerCase}
             />
             <CheckBox
               id="useNumbers"
               label="Include Numbers"
               name="useNumbers"
-              setValues={setSettings}
+              onChange={handleChange}
               value={settings.useNumbers}
             />
             <CheckBox
               id="useSymbols"
               label="Include Symbols"
               name="useSymbols"
-              setValues={setSettings}
+              onChange={handleChange}
               value={settings.useSymbols}
             />
           </div>
